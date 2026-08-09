@@ -118,17 +118,17 @@
 
 <div class="plan">
   <h2>格局示意圖</h2>
-  <p>示意用、非等比例。點擊區塊可跳到該區域的詳細內容。</p>
+  <p>示意用、非等比例。點擊區塊可跳到該區域的詳細內容。尺寸單位為公分（cm），坪數換算：1 坪 ≈ 3.306 m²。</p>
   <svg viewBox="0 0 960 330" role="img" aria-label="格局示意圖">
-    <g data-goto="front-balcony"><rect class="room" x="10"  y="20" width="95"  height="140" rx="6"/><text x="57"  y="85" text-anchor="middle">前陽台</text><text class="dim" x="57" y="103" text-anchor="middle">125×380</text></g>
-    <g data-goto="living"><rect class="room" x="115" y="20" width="230" height="140" rx="6"/><text x="230" y="85" text-anchor="middle">客廳</text><text class="dim" x="230" y="103" text-anchor="middle">460×380・有冷氣</text></g>
-    <g data-goto="dining"><rect class="room" x="355" y="20" width="190" height="140" rx="6"/><text x="450" y="85" text-anchor="middle">餐廳</text><text class="dim" x="450" y="103" text-anchor="middle">凹洞 135×50</text></g>
+    <g data-goto="front-balcony"><rect class="room" x="10"  y="20" width="95"  height="140" rx="6"/><text x="57"  y="85" text-anchor="middle">前陽台</text><text class="dim" x="57" y="103" text-anchor="middle">125×380cm・1.4坪</text></g>
+    <g data-goto="living"><rect class="room" x="115" y="20" width="230" height="140" rx="6"/><text x="230" y="85" text-anchor="middle">客廳</text><text class="dim" x="230" y="103" text-anchor="middle">460×380cm・5.3坪</text></g>
+    <g data-goto="dining"><rect class="room" x="355" y="20" width="190" height="140" rx="6"/><text x="450" y="85" text-anchor="middle">餐廳</text><text class="dim" x="450" y="103" text-anchor="middle">凹洞 135×50cm</text></g>
     <g data-goto="kitchen"><rect class="room" x="555" y="20" width="150" height="140" rx="6"/><text x="630" y="85" text-anchor="middle">廚房</text><text class="dim" x="630" y="103" text-anchor="middle">RO 進水口</text></g>
     <g data-goto="back-balcony"><rect class="room" x="715" y="20" width="95" height="140" rx="6"/><text x="762" y="85" text-anchor="middle">後陽台</text><text class="dim" x="762" y="103" text-anchor="middle">有水有電</text></g>
-    <g data-goto="master"><rect class="room" x="115" y="180" width="200" height="130" rx="6"/><text x="215" y="240" text-anchor="middle">主臥＋廁所</text><text class="dim" x="215" y="258" text-anchor="middle">335×550</text></g>
-    <g data-goto="study"><rect class="room" x="325" y="180" width="150" height="130" rx="6"/><text x="400" y="240" text-anchor="middle">書房</text><text class="dim" x="400" y="258" text-anchor="middle">240×450</text></g>
-    <g data-goto="multi"><rect class="room" x="485" y="180" width="160" height="130" rx="6"/><text x="565" y="240" text-anchor="middle">多功能間</text><text class="dim" x="565" y="258" text-anchor="middle">325×445・木地板</text></g>
-    <g data-goto="guest"><rect class="room" x="655" y="180" width="155" height="130" rx="6"/><text x="732" y="240" text-anchor="middle">客房</text><text class="dim" x="732" y="258" text-anchor="middle">320×395</text></g>
+    <g data-goto="master"><rect class="room" x="115" y="180" width="200" height="130" rx="6"/><text x="215" y="240" text-anchor="middle">主臥＋廁所</text><text class="dim" x="215" y="258" text-anchor="middle">335×550cm・5.6坪</text></g>
+    <g data-goto="study"><rect class="room" x="325" y="180" width="150" height="130" rx="6"/><text x="400" y="240" text-anchor="middle">書房</text><text class="dim" x="400" y="258" text-anchor="middle">240×450cm・3.3坪</text></g>
+    <g data-goto="multi"><rect class="room" x="485" y="180" width="160" height="130" rx="6"/><text x="565" y="240" text-anchor="middle">多功能間</text><text class="dim" x="565" y="258" text-anchor="middle">325×445cm・4.4坪</text></g>
+    <g data-goto="guest"><rect class="room" x="655" y="180" width="155" height="130" rx="6"/><text x="732" y="240" text-anchor="middle">客房</text><text class="dim" x="732" y="258" text-anchor="middle">320×395cm・3.8坪</text></g>
     <g data-goto="bath"><rect class="room" x="820" y="180" width="130" height="130" rx="6"/><text x="885" y="240" text-anchor="middle">共用衛浴</text><text class="dim" x="885" y="258" text-anchor="middle">浴缸損壞</text></g>
   </svg>
 </div>
@@ -152,11 +152,11 @@
 
 <script>
 const AREAS = [
-  { id:"living", name:"客廳", dims:"深 380 × 寬 460 cm",
+  { id:"living", name:"客廳", dims:"深 380 × 寬 460 cm（17.5 m² ≈ 5.3 坪）",
     specs:["有冷氣","窗簾：寬 260 × 高 220 cm","與餐廳之間可做 L 型隔間，約 112 × 90 cm（尺寸與用途待確認）"],
     todos:[["P1","窗簾軌不好用，更換（260×220）"],["chk","L 型隔間規劃待確認"],["chk","公共區域燈具皆無燈罩 → 問饅頭"]],
     photos:[["客廳照.jpg","客廳全景"],["客廳落地窗照.jpg","落地窗"],["客廳拉簾構造.jpg","拉簾構造"],["拉繩式窗簾構造.jpg","拉繩式窗簾構造"]] },
-  { id:"front-balcony", name:"前陽台", dims:"寬 125 × 長 380 cm",
+  { id:"front-balcony", name:"前陽台", dims:"寬 125 × 長 380 cm（4.8 m² ≈ 1.4 坪）",
     specs:["有水龍頭與水管","沒有電源（電燈正常）","裝烘衣機可考慮從冷氣窗接電"],
     todos:[["P3","烘衣機：評估接電方式與機型"]],
     photos:[["前陽台照.jpg","前陽台全景"],["前陽台可放乾衣機空間照.jpg","可放乾衣機的空間"]] },
@@ -172,19 +172,19 @@ const AREAS = [
     specs:["有電、有水"],
     todos:[["P1","水路切成兩個出口（一個供洗地板）"]],
     photos:[["後陽台照.jpg","後陽台全景"]] },
-  { id:"master", name:"主臥（含廁所）", dims:"寬 335 × 長 550 cm",
+  { id:"master", name:"主臥（含廁所）", dims:"寬 335 × 長 550 cm（18.4 m² ≈ 5.6 坪）",
     specs:["窗戶：寬 120 × 高 135 cm","窗簾周邊為直接對外的牆"],
     todos:[["P1","窗簾軌不好用、拉不開 → 更換"],["P1","窗邊輕微壁癌處理"],["P1","廁所門破損修繕"],["P2","浴室加浴簾＋層架"],["P2","評估窗型冷氣（有窗型冷氣口）"]],
     photos:[["主臥照.jpg","主臥全景"],["主臥廁所照.jpg","主臥廁所"]] },
-  { id:"study", name:"書房", dims:"寬 240 × 長 450 cm",
+  { id:"study", name:"書房", dims:"寬 240 × 長 450 cm（10.8 m² ≈ 3.3 坪）",
     specs:["電燈正常"],
     todos:[["P1","現有木桌撤掉"],["P2","評估窗型冷氣（有窗型冷氣口）"]],
     photos:[["書房照.jpg","書房全景"]] },
-  { id:"multi", name:"多功能間（有鋪木地板）", dims:"寬 325 × 長 445 cm",
+  { id:"multi", name:"多功能間（有鋪木地板）", dims:"寬 325 × 長 445 cm（14.5 m² ≈ 4.4 坪）",
     specs:["窗戶：寬 120 × 高 135 cm","窗簾軌正常","木地板"],
     todos:[["P2","評估窗型冷氣（有窗型冷氣口）"]],
     photos:[["多功能間照.jpg","多功能間（木地板）"]] },
-  { id:"guest", name:"客房（磁磚地板）", dims:"寬 320 × 深 395 cm",
+  { id:"guest", name:"客房（磁磚地板）", dims:"寬 320 × 深 395 cm（12.6 m² ≈ 3.8 坪）",
     specs:["窗戶：寬 120 × 高 135 cm","房內有衣櫃：深 60 × 寬 150 cm","伸縮桿方案需長度 ≥140 cm"],
     todos:[["P1","窗簾軌處理：更換／窗簾盒／伸縮桿（16:50 與 17:04 紀錄待對照確認）"],["P2","評估窗型冷氣（有窗型冷氣口）"]],
     photos:[["客房整體照.jpg","客房全景（含衣櫃）"]] },
@@ -231,7 +231,8 @@ document.getElementById("stats").innerHTML =
   `<div class="stat"><b>${AREAS.length}</b><span>個區域</span></div>
    <div class="stat"><b>${flat.length}</b><span>張改裝前照片</span></div>
    <div class="stat"><b>${nTodo}</b><span>項需求/待辦</span></div>
-   <div class="stat"><b>${nP1}</b><span>項 P1 必要</span></div>`;
+   <div class="stat"><b>${nP1}</b><span>項 P1 必要</span></div>
+   <div class="stat"><b>≈23.8</b><span>坪（已丈量 6 區合計）</span></div>`;
 
 // ---- 偵測改裝後照片（after/ 同檔名存在 → 顯示前後對比） ----
 flat.forEach(({file})=>{
