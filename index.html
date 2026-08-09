@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>新宿舍改裝評估 — 區域需求與照片</title>
+<style>
+  :root{
+    --bg:#f7f4ee; --card:#ffffff; --ink:#2b2620; --muted:#7a7167;
+    --line:#e6dfd4; --accent:#a06a3c; --accent-soft:#f0e6d8;
+    --p1:#b03a2e; --p1-bg:#fbeae7; --p2:#9a6b00; --p2-bg:#faf1dc;
+    --p3:#3e7a4e; --p3-bg:#e8f2ea; --chk:#5c6672; --chk-bg:#eceff2;
+    --radius:14px; --shadow:0 1px 3px rgba(43,38,32,.08),0 6px 18px rgba(43,38,32,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif;line-height:1.65}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px 80px}
+
+  header.hero{padding:48px 0 8px}
+  .hero h1{font-size:1.9rem;margin:0 0 6px;letter-spacing:.02em}
+  .hero p.sub{margin:0;color:var(--muted)}
+  .stats{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0 0}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:10px 18px;box-shadow:var(--shadow)}
+  .stat b{font-size:1.25rem;color:var(--accent);margin-right:6px}
+  .stat span{color:var(--muted);font-size:.85rem}
+
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(247,244,238,.92);backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);margin:24px -20px 0;padding:10px 20px;
+    display:flex;gap:8px;overflow-x:auto;white-space:nowrap}
+  nav.toc a{color:var(--ink);text-decoration:none;font-size:.88rem;padding:5px 12px;
+    border-radius:999px;border:1px solid var(--line);background:var(--card)}
+  nav.toc a:hover{background:var(--accent-soft);border-color:var(--accent)}
+
+  .plan{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);margin:26px 0;padding:18px}
+  .plan h2{margin:0 0 4px;font-size:1.05rem}
+  .plan p{margin:0 0 10px;color:var(--muted);font-size:.85rem}
+  .plan svg{width:100%;height:auto;display:block}
+  .plan .room{fill:#faf6ef;stroke:#c9b99f;stroke-width:1.5;cursor:pointer;transition:fill .15s}
+  .plan .room:hover{fill:var(--accent-soft)}
+  .plan text{font-size:13px;fill:var(--ink);pointer-events:none;font-family:inherit}
+  .plan text.dim{font-size:10.5px;fill:var(--muted)}
+
+  section.area{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);margin:26px 0;padding:24px;scroll-margin-top:70px}
+  .area h2{margin:0;font-size:1.25rem;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .area h2 .dims{font-size:.85rem;color:var(--muted);font-weight:400}
+  .area .body{display:grid;grid-template-columns:minmax(260px,5fr) minmax(220px,4fr);gap:22px;margin-top:14px}
+  @media(max-width:760px){.area .body{grid-template-columns:1fr}}
+
+  .specs h3,.todos h3,.gallery h3{font-size:.8rem;letter-spacing:.12em;color:var(--muted);
+    text-transform:uppercase;margin:14px 0 6px;font-weight:600}
+  .specs ul{margin:0;padding-left:1.2em}
+  .specs li{margin:3px 0}
+  .todos ul{list-style:none;margin:0;padding:0}
+  .todos li{display:flex;gap:8px;align-items:flex-start;margin:6px 0}
+  .badge{flex:none;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-top:2px}
+  .badge.P1{color:var(--p1);background:var(--p1-bg)}
+  .badge.P2{color:var(--p2);background:var(--p2-bg)}
+  .badge.P3{color:var(--p3);background:var(--p3-bg)}
+  .badge.chk{color:var(--chk);background:var(--chk-bg)}
+
+  .thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .thumb{position:relative;border-radius:10px;overflow:hidden;cursor:zoom-in;border:1px solid var(--line);
+    aspect-ratio:4/3;background:#eee}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s}
+  .thumb:hover img{transform:scale(1.04)}
+  .thumb .cap{position:absolute;left:0;right:0;bottom:0;padding:14px 8px 5px;font-size:.75rem;color:#fff;
+    background:linear-gradient(transparent,rgba(0,0,0,.62))}
+  .thumb .ba{position:absolute;top:6px;right:6px;font-size:.68rem;font-weight:700;color:#fff;
+    background:var(--accent);padding:2px 7px;border-radius:999px;display:none}
+  .thumb.has-after .ba{display:block}
+
+  /* Lightbox */
+  #lb{position:fixed;inset:0;background:rgba(20,16,12,.93);z-index:100;display:none;
+    flex-direction:column;align-items:center;justify-content:center;padding:20px}
+  #lb.open{display:flex}
+  #lb .stage{position:relative;max-width:min(92vw,1000px);width:100%}
+  #lb img{max-width:100%;max-height:76vh;display:block;margin:0 auto;border-radius:8px}
+  #lb .lb-cap{color:#eee;text-align:center;margin-top:12px;font-size:.95rem}
+  #lb .lb-btns{display:flex;gap:10px;justify-content:center;margin-top:10px}
+  #lb button{font:inherit;font-size:.85rem;color:#fff;background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:6px 16px;cursor:pointer}
+  #lb button:hover{background:rgba(255,255,255,.26)}
+  #lb button.on{background:var(--accent);border-color:var(--accent)}
+  #lb .nav{position:absolute;top:50%;transform:translateY(-50%);font-size:1.6rem;padding:8px 14px}
+  #lb .prev{left:-4px}#lb .next{right:-4px}
+  #lb .close{position:fixed;top:16px;right:20px;font-size:1.1rem}
+
+  /* 前後對比滑桿（twentytwenty 式，純原生實作） */
+  .cmp{position:relative;overflow:hidden;border-radius:8px;touch-action:none;user-select:none;
+    max-height:76vh;margin:0 auto}
+  .cmp img{width:100%;max-height:76vh;object-fit:contain;display:block;pointer-events:none}
+  .cmp .after-layer{position:absolute;inset:0;overflow:hidden}
+  .cmp .after-layer img{position:absolute;inset:0}
+  .cmp .divider{position:absolute;top:0;bottom:0;width:3px;background:#fff;box-shadow:0 0 6px rgba(0,0,0,.5);cursor:ew-resize}
+  .cmp .divider::after{content:"◀ ▶";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    background:#fff;color:#333;font-size:.62rem;letter-spacing:2px;padding:7px 9px;border-radius:999px;white-space:nowrap}
+  .cmp .tag{position:absolute;top:10px;font-size:.72rem;font-weight:700;color:#fff;
+    background:rgba(0,0,0,.55);padding:3px 10px;border-radius:999px}
+  .cmp .tag.b{left:10px}.cmp .tag.a{right:10px}
+
+  footer{margin-top:50px;color:var(--muted);font-size:.82rem;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>🏠 新宿舍改裝評估</h1>
+  <p class="sub">各區域的現況照片、規格尺寸與改裝需求 ・ 現場勘查：2026-08-09（王琮仁）</p>
+  <div class="stats" id="stats"></div>
+</header>
+
+<nav class="toc" id="toc"></nav>
+
+<div class="plan">
+  <h2>格局示意圖</h2>
+  <p>示意用、非等比例。點擊區塊可跳到該區域的詳細內容。</p>
+  <svg viewBox="0 0 960 330" role="img" aria-label="格局示意圖">
+    <g data-goto="front-balcony"><rect class="room" x="10"  y="20" width="95"  height="140" rx="6"/><text x="57"  y="85" text-anchor="middle">前陽台</text><text class="dim" x="57" y="103" text-anchor="middle">125×380</text></g>
+    <g data-goto="living"><rect class="room" x="115" y="20" width="230" height="140" rx="6"/><text x="230" y="85" text-anchor="middle">客廳</text><text class="dim" x="230" y="103" text-anchor="middle">460×380・有冷氣</text></g>
+    <g data-goto="dining"><rect class="room" x="355" y="20" width="190" height="140" rx="6"/><text x="450" y="85" text-anchor="middle">餐廳</text><text class="dim" x="450" y="103" text-anchor="middle">凹洞 135×50</text></g>
+    <g data-goto="kitchen"><rect class="room" x="555" y="20" width="150" height="140" rx="6"/><text x="630" y="85" text-anchor="middle">廚房</text><text class="dim" x="630" y="103" text-anchor="middle">RO 進水口</text></g>
+    <g data-goto="back-balcony"><rect class="room" x="715" y="20" width="95" height="140" rx="6"/><text x="762" y="85" text-anchor="middle">後陽台</text><text class="dim" x="762" y="103" text-anchor="middle">有水有電</text></g>
+    <g data-goto="master"><rect class="room" x="115" y="180" width="200" height="130" rx="6"/><text x="215" y="240" text-anchor="middle">主臥＋廁所</text><text class="dim" x="215" y="258" text-anchor="middle">335×550</text></g>
+    <g data-goto="study"><rect class="room" x="325" y="180" width="150" height="130" rx="6"/><text x="400" y="240" text-anchor="middle">書房</text><text class="dim" x="400" y="258" text-anchor="middle">240×450</text></g>
+    <g data-goto="multi"><rect class="room" x="485" y="180" width="160" height="130" rx="6"/><text x="565" y="240" text-anchor="middle">多功能間</text><text class="dim" x="565" y="258" text-anchor="middle">325×445・木地板</text></g>
+    <g data-goto="guest"><rect class="room" x="655" y="180" width="155" height="130" rx="6"/><text x="732" y="240" text-anchor="middle">客房</text><text class="dim" x="732" y="258" text-anchor="middle">320×395</text></g>
+    <g data-goto="bath"><rect class="room" x="820" y="180" width="130" height="130" rx="6"/><text x="885" y="240" text-anchor="middle">共用衛浴</text><text class="dim" x="885" y="258" text-anchor="middle">浴缸損壞</text></g>
+  </svg>
+</div>
+
+<div id="areas"></div>
+
+<footer>
+  照片：<code>photos/before/</code>；改裝後照片放入 <code>photos/after/</code> 並取相同檔名，
+  對應照片會自動出現「前後對比」滑桿。<br>宿舍整理與裝潢評估專案 ・ C:\Projects\dorm-renovation
+</footer>
+</div>
+
+<div id="lb">
+  <button class="close" onclick="lbClose()">✕ 關閉</button>
+  <div class="stage" id="lb-stage"></div>
+  <div class="lb-cap" id="lb-cap"></div>
+  <div class="lb-btns" id="lb-btns"></div>
+  <button class="nav prev" onclick="lbStep(-1)">‹</button>
+  <button class="nav next" onclick="lbStep(1)">›</button>
+</div>
+
+<script>
+const AREAS = [
+  { id:"living", name:"客廳", dims:"深 380 × 寬 460 cm",
+    specs:["有冷氣","窗簾：寬 260 × 高 220 cm","與餐廳之間可做 L 型隔間，約 112 × 90 cm（尺寸與用途待確認）"],
+    todos:[["P1","窗簾軌不好用，更換（260×220）"],["chk","L 型隔間規劃待確認"],["chk","公共區域燈具皆無燈罩 → 問饅頭"]],
+    photos:[["客廳照.jpg","客廳全景"],["客廳落地窗照.jpg","落地窗"],["客廳拉簾構造.jpg","拉簾構造"],["拉繩式窗簾構造.jpg","拉繩式窗簾構造"]] },
+  { id:"front-balcony", name:"前陽台", dims:"寬 125 × 長 380 cm",
+    specs:["有水龍頭與水管","沒有電源（電燈正常）","裝烘衣機可考慮從冷氣窗接電"],
+    todos:[["P3","烘衣機：評估接電方式與機型"]],
+    photos:[["前陽台照.jpg","前陽台全景"],["前陽台可放乾衣機空間照.jpg","可放乾衣機的空間"]] },
+  { id:"dining", name:"餐廳", dims:"凹洞 深 50 × 寬 135 cm",
+    specs:["凹洞放現有餐桌剛剛好","電器櫃可用空間約寬 185 cm"],
+    todos:[["P3","評估電器櫃（寬 ≤185 cm）"],["chk","公共區域燈罩 → 問饅頭"]],
+    photos:[["餐廳整體照.jpg","餐廳全景"],["餐廳後段照.jpg","餐廳後段"]] },
+  { id:"kitchen", name:"廚房", dims:"",
+    specs:["旁邊小空間：寬 76 × 高 80 cm","櫥櫃上方可放空間：寬 75 × 深 60 cm","水龍頭有外接 RO 進水口"],
+    todos:[["P3","評估小空間與櫃上空間的收納利用"]],
+    photos:[["廚房整體照.jpg","廚房全景"],["廚房小空間照片.jpg","旁邊小空間（76×80）"],["廚房水龍頭有外接RO進水口.jpg","水龍頭外接 RO 進水口"]] },
+  { id:"back-balcony", name:"後陽台", dims:"",
+    specs:["有電、有水"],
+    todos:[["P1","水路切成兩個出口（一個供洗地板）"]],
+    photos:[["後陽台照.jpg","後陽台全景"]] },
+  { id:"master", name:"主臥（含廁所）", dims:"寬 335 × 長 550 cm",
+    specs:["窗戶：寬 120 × 高 135 cm","窗簾周邊為直接對外的牆"],
+    todos:[["P1","窗簾軌不好用、拉不開 → 更換"],["P1","窗邊輕微壁癌處理"],["P1","廁所門破損修繕"],["P2","浴室加浴簾＋層架"],["P2","評估窗型冷氣（有窗型冷氣口）"]],
+    photos:[["主臥照.jpg","主臥全景"],["主臥廁所照.jpg","主臥廁所"]] },
+  { id:"study", name:"書房", dims:"寬 240 × 長 450 cm",
+    specs:["電燈正常"],
+    todos:[["P1","現有木桌撤掉"],["P2","評估窗型冷氣（有窗型冷氣口）"]],
+    photos:[["書房照.jpg","書房全景"]] },
+  { id:"multi", name:"多功能間（有鋪木地板）", dims:"寬 325 × 長 445 cm",
+    specs:["窗戶：寬 120 × 高 135 cm","窗簾軌正常","木地板"],
+    todos:[["P2","評估窗型冷氣（有窗型冷氣口）"]],
+    photos:[["多功能間照.jpg","多功能間（木地板）"]] },
+  { id:"guest", name:"客房（磁磚地板）", dims:"寬 320 × 深 395 cm",
+    specs:["窗戶：寬 120 × 高 135 cm","房內有衣櫃：深 60 × 寬 150 cm","伸縮桿方案需長度 ≥140 cm"],
+    todos:[["P1","窗簾軌處理：更換／窗簾盒／伸縮桿（16:50 與 17:04 紀錄待對照確認）"],["P2","評估窗型冷氣（有窗型冷氣口）"]],
+    photos:[["客房整體照.jpg","客房全景（含衣櫃）"]] },
+  { id:"bath", name:"共用衛浴", dims:"",
+    specs:["浴缸損壞"],
+    todos:[["P1","確認浴缸能否更換，估修繕費用"]],
+    photos:[["共用衛浴照.jpg","共用衛浴現況"]] },
+];
+
+const BEFORE = "photos/before/", AFTER = "photos/after/";
+const afterOK = {};   // 檔名 -> 是否有改裝後照片
+
+// ---- 渲染區域卡片 ----
+const areasEl = document.getElementById("areas");
+const tocEl = document.getElementById("toc");
+let flat = [];  // lightbox 用的照片平面清單
+AREAS.forEach(a=>{
+  tocEl.insertAdjacentHTML("beforeend", `<a href="#${a.id}">${a.name.replace(/（.*?）/,"")}</a>`);
+  const specs = a.specs.map(s=>`<li>${s}</li>`).join("");
+  const todos = a.todos.map(([p,t])=>`<li><span class="badge ${p}">${p==="chk"?"待確認":p}</span><span>${t}</span></li>`).join("");
+  const thumbs = a.photos.map(([f,cap])=>{
+    const idx = flat.length; flat.push({file:f, cap:`${a.name}｜${cap}`});
+    return `<figure class="thumb" data-file="${f}" onclick="lbOpen(${idx})">
+      <img src="${BEFORE}${f}" alt="${cap}" loading="lazy"><span class="ba">前後對比</span>
+      <figcaption class="cap">${cap}</figcaption></figure>`;
+  }).join("");
+  areasEl.insertAdjacentHTML("beforeend", `
+    <section class="area" id="${a.id}">
+      <h2>${a.name}${a.dims?`<span class="dims">${a.dims}</span>`:""}</h2>
+      <div class="body">
+        <div>
+          <div class="specs"><h3>規格與現況</h3><ul>${specs}</ul></div>
+          <div class="todos"><h3>需求與待辦</h3><ul>${todos}</ul></div>
+        </div>
+        <div class="gallery"><h3>照片</h3><div class="thumbs">${thumbs}</div></div>
+      </div>
+    </section>`);
+});
+
+// ---- 統計 ----
+const nTodo = AREAS.reduce((n,a)=>n+a.todos.length,0);
+const nP1 = AREAS.reduce((n,a)=>n+a.todos.filter(t=>t[0]==="P1").length,0);
+document.getElementById("stats").innerHTML =
+  `<div class="stat"><b>${AREAS.length}</b><span>個區域</span></div>
+   <div class="stat"><b>${flat.length}</b><span>張改裝前照片</span></div>
+   <div class="stat"><b>${nTodo}</b><span>項需求/待辦</span></div>
+   <div class="stat"><b>${nP1}</b><span>項 P1 必要</span></div>`;
+
+// ---- 偵測改裝後照片（after/ 同檔名存在 → 顯示前後對比） ----
+flat.forEach(({file})=>{
+  const t = new Image();
+  t.onload = ()=>{ afterOK[file]=true;
+    document.querySelectorAll(`.thumb[data-file="${CSS.escape(file)}"]`).forEach(el=>el.classList.add("has-after")); };
+  t.src = AFTER+file;
+});
+
+// ---- 格局圖點擊 ----
+document.querySelectorAll(".plan g[data-goto]").forEach(g=>
+  g.addEventListener("click",()=>document.getElementById(g.dataset.goto)?.scrollIntoView({behavior:"smooth"})));
+
+// ---- Lightbox ----
+let cur=0, mode="single";
+const lb=document.getElementById("lb"), stage=document.getElementById("lb-stage"),
+      cap=document.getElementById("lb-cap"), btns=document.getElementById("lb-btns");
+function lbOpen(i){ cur=i; mode="single"; render(); lb.classList.add("open"); document.body.style.overflow="hidden"; }
+function lbClose(){ lb.classList.remove("open"); document.body.style.overflow=""; }
+function lbStep(d){ cur=(cur+d+flat.length)%flat.length; mode="single"; render(); }
+function render(){
+  const {file,cap:c}=flat[cur];
+  cap.textContent=c;
+  if(mode==="cmp" && afterOK[file]){
+    stage.innerHTML=`<div class="cmp" id="cmp">
+        <img src="${BEFORE}${file}" alt="改裝前">
+        <div class="after-layer" id="cmp-after"><img src="${AFTER}${file}" alt="改裝後"></div>
+        <div class="divider" id="cmp-div"></div>
+        <span class="tag b">改裝前</span><span class="tag a">改裝後</span></div>`;
+    initCmp();
+  }else{
+    stage.innerHTML=`<img src="${BEFORE}${file}" alt="${c}">`;
+  }
+  btns.innerHTML = afterOK[file]
+    ? `<button class="${mode==="single"?"on":""}" onclick="mode='single';render()">改裝前</button>
+       <button class="${mode==="cmp"?"on":""}" onclick="mode='cmp';render()">前後對比</button>`
+    : "";
+}
+function initCmp(){
+  const box=document.getElementById("cmp"), layer=document.getElementById("cmp-after"),
+        div=document.getElementById("cmp-div");
+  let pos=.5;
+  const apply=()=>{ const w=box.clientWidth;
+    layer.style.clipPath=`inset(0 0 0 ${pos*100}%)`; div.style.left=`calc(${pos*100}% - 1.5px)`; };
+  apply();
+  const move=e=>{ const r=box.getBoundingClientRect();
+    pos=Math.min(1,Math.max(0,((e.touches?e.touches[0].clientX:e.clientX)-r.left)/r.width)); apply(); };
+  box.addEventListener("pointerdown",e=>{ move(e);
+    const up=()=>{window.removeEventListener("pointermove",move);window.removeEventListener("pointerup",up);};
+    window.addEventListener("pointermove",move); window.addEventListener("pointerup",up); });
+}
+document.addEventListener("keydown",e=>{
+  if(!lb.classList.contains("open"))return;
+  if(e.key==="Escape")lbClose(); if(e.key==="ArrowLeft")lbStep(-1); if(e.key==="ArrowRight")lbStep(1);
+});
+</script>
+</body>
+</html>
