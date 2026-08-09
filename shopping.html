@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>購買清單 — 新宿舍改裝評估</title>
+<style>
+  :root{
+    --bg:#f7f4ee; --card:#ffffff; --ink:#2b2620; --muted:#7a7167;
+    --line:#e6dfd4; --accent:#a06a3c; --accent-soft:#f0e6d8;
+    --p1:#b03a2e; --p1-bg:#fbeae7; --p2:#9a6b00; --p2-bg:#faf1dc;
+    --p3:#3e7a4e; --p3-bg:#e8f2ea; --chk:#5c6672; --chk-bg:#eceff2;
+    --buy:#1d6a96; --buy-bg:#e3eff7;
+    --radius:14px; --shadow:0 1px 3px rgba(43,38,32,.08),0 6px 18px rgba(43,38,32,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif;line-height:1.65}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px 80px}
+  header.hero{padding:42px 0 6px}
+  .hero h1{font-size:1.8rem;margin:0 0 6px}
+  .hero p.sub{margin:0;color:var(--muted)}
+  .hero a.back{display:inline-block;margin-top:10px;color:var(--accent);text-decoration:none;
+    border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 14px;font-size:.88rem}
+  .hero a.back:hover{background:var(--accent-soft)}
+  .stats{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0 0}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:10px 18px;box-shadow:var(--shadow)}
+  .stat b{font-size:1.2rem;color:var(--accent);margin-right:6px}
+  .stat span{color:var(--muted);font-size:.85rem}
+
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 14px}
+  .filters button{font:inherit;font-size:.85rem;padding:5px 14px;border-radius:999px;cursor:pointer;
+    border:1px solid var(--line);background:var(--card);color:var(--ink)}
+  .filters button:hover{background:var(--accent-soft)}
+  .filters button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:6px 0;overflow-x:auto}
+  table{width:100%;border-collapse:collapse;min-width:860px}
+  th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;font-size:.92rem}
+  th{font-size:.75rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  tr.chosen{background:#fdf9f2}
+  td.item b{display:block}
+  td.item small{color:var(--muted)}
+  td.price{white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums}
+  .badge{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap}
+  .badge.P1{color:var(--p1);background:var(--p1-bg)}
+  .badge.P2{color:var(--p2);background:var(--p2-bg)}
+  .badge.P3{color:var(--p3);background:var(--p3-bg)}
+  .badge.st-預設購買{color:var(--buy);background:var(--buy-bg)}
+  .badge.st-已購買{color:var(--p3);background:var(--p3-bg)}
+  .badge.st-待確認,.badge.st-待評估,.badge.st-待決定{color:var(--chk);background:var(--chk-bg)}
+  .badge.st-未處理,.badge.st-未購買{color:var(--muted);background:#f1ede6}
+  a.link{color:var(--accent)}
+  footer{margin-top:40px;color:var(--muted);font-size:.82rem;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>🛒 購買清單</h1>
+  <p class="sub">依優先級追蹤採購與修繕項目 ・ P1 必要／P2 重要／P3 想要</p>
+  <a class="back" href="index.html">← 回格局與需求總覽</a>
+  <div class="stats" id="stats"></div>
+</header>
+
+<div class="filters" id="filters"></div>
+<div class="card"><table>
+  <thead><tr><th>優先級</th><th>分類</th><th>品項</th><th>預估價格</th><th>數量</th><th>狀態</th></tr></thead>
+  <tbody id="rows"></tbody>
+</table></div>
+
+<footer>資料同步自 <code>04-採購清單.csv</code>。標「預設購買」＝已選定商品，點品名可開啟賣場頁面。</footer>
+</div>
+
+<script>
+const ITEMS = [
+  {p:"P1",cat:"電器",name:"主臥冷氣 聲寶 AU-JF28DC1/AM-JF28DC1",spec:"4-6坪 一級變頻冷暖分離式・主臥5.6坪適用・含標準安裝・保固7年",
+   url:"https://www.momoshop.com.tw/product/15168605",price:17900,qty:1,st:"預設購買",note:"限時價 $17,900（市售 $23,900）"},
+  {p:"P1",cat:"修繕工程",name:"客廳窗簾軌更換",spec:"窗寬260×高220cm・舊軌道不好用",qty:1,st:"未處理"},
+  {p:"P1",cat:"修繕工程",name:"主臥窗簾軌更換",spec:"窗寬120×高135cm・拉不開",qty:1,st:"未處理"},
+  {p:"P1",cat:"修繕工程",name:"沒鋪地板客房窗簾軌更換",spec:"窗寬120×高135cm",qty:1,st:"未處理"},
+  {p:"P1",cat:"修繕工程",name:"主臥壁癌處理",spec:"窗簾周邊・對外牆・先處理再裝窗簾",qty:1,st:"未處理"},
+  {p:"P1",cat:"修繕工程",name:"主臥廁所門修繕或更換",spec:"門有破損",qty:1,st:"未處理"},
+  {p:"P1",cat:"修繕工程",name:"客人浴室浴缸更換",spec:"浴缸壞掉・先確認能否更換",qty:1,st:"待確認"},
+  {p:"P1",cat:"工程",name:"後陽台水路切兩個出口",spec:"一個出口供洗地板",qty:1,st:"未處理"},
+  {p:"P1",cat:"窗簾織品",name:"客房窗簾伸縮桿或窗簾盒",spec:"伸縮桿長度需 ≥140cm・該房無窗簾軌",qty:1,st:"待決定"},
+  {p:"P2",cat:"窗簾織品",name:"客廳窗簾",spec:"寬260×高220cm・配合新軌道",qty:1,st:"未購買"},
+  {p:"P2",cat:"窗簾織品",name:"臥室窗簾",spec:"窗120×135cm・四間窗戶同尺寸",qty:4,st:"未購買"},
+  {p:"P2",cat:"衛浴",name:"主臥浴室浴簾＋桿",spec:"",qty:1,st:"未購買"},
+  {p:"P2",cat:"衛浴",name:"主臥浴室層架",spec:"",qty:1,st:"未購買"},
+  {p:"P2",cat:"電器",name:"其他臥室冷氣",spec:"每間臥室皆有窗型冷氣口・決定要裝幾間",qty:0,st:"待評估"},
+  {p:"P2",cat:"電器",name:"公共區域燈罩",spec:"先問饅頭",qty:0,st:"待確認"},
+  {p:"P3",cat:"電器",name:"烘衣機",spec:"放前陽台・需從冷氣窗接電",qty:1,st:"待評估"},
+  {p:"P3",cat:"家具",name:"餐廳電器櫃",spec:"空間寬約185cm",qty:1,st:"待評估"},
+  {p:"P3",cat:"家具",name:"客廳餐廳間 L 型隔間/檯面",spec:"約112×90cm・尺寸待確認",qty:1,st:"待確認"},
+  {p:"整理",cat:"整理",name:"書房木桌撤掉",spec:"搬運/丟棄方式待定",qty:1,st:"未處理"},
+];
+
+const rowsEl=document.getElementById("rows");
+function render(filter){
+  rowsEl.innerHTML=ITEMS.filter(i=>filter==="全部"||i.p===filter||i.st===filter).map(i=>`
+    <tr class="${i.st==="預設購買"?"chosen":""}">
+      <td><span class="badge ${i.p}">${i.p}</span></td>
+      <td>${i.cat}</td>
+      <td class="item"><b>${i.url?`<a class="link" href="${i.url}" target="_blank" rel="noopener">${i.name} ↗</a>`:i.name}</b>
+        <small>${i.spec||""}${i.note?`・${i.note}`:""}</small></td>
+      <td class="price">${i.price?`$${i.price.toLocaleString()}`:"—"}</td>
+      <td>${i.qty||"—"}</td>
+      <td><span class="badge st-${i.st}">${i.st}</span></td>
+    </tr>`).join("");
+}
+const FILTERS=["全部","P1","P2","P3","預設購買","待確認"];
+const fEl=document.getElementById("filters");
+FILTERS.forEach((f,i)=>{
+  const b=document.createElement("button"); b.textContent=f; if(i===0)b.classList.add("on");
+  b.onclick=()=>{fEl.querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.classList.add("on");render(f);};
+  fEl.appendChild(b);
+});
+render("全部");
+
+const nP1=ITEMS.filter(i=>i.p==="P1").length;
+const chosenSum=ITEMS.filter(i=>i.price).reduce((s,i)=>s+i.price*(i.qty||1),0);
+document.getElementById("stats").innerHTML=
+  `<div class="stat"><b>${ITEMS.length}</b><span>項目</span></div>
+   <div class="stat"><b>${nP1}</b><span>項 P1 必要</span></div>
+   <div class="stat"><b>$${chosenSum.toLocaleString()}</b><span>已選定商品小計</span></div>
+   <div class="stat"><b>${ITEMS.filter(i=>i.st==="已購買").length}</b><span>已購買</span></div>`;
+</script>
+</body>
+</html>
