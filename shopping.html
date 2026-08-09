@@ -73,19 +73,21 @@
   <tbody id="rows"></tbody>
 </table></div>
 
-<footer>資料同步自 <code>04-採購清單.csv</code>。標「預設購買」＝已選定商品，點品名可開啟賣場頁面。</footer>
+<footer>資料同步自 <code>04-採購清單.csv</code>。標「預設購買」＝已選定商品，點品名可開啟賣場頁面。<br>
+💰 退稅規則：購買一級能效冷氣可申請財政部「減徵貨物稅」退稅——冷氣能力 3.6kW 以上每台退 $2,000、3.6kW 以下退 $1,600。
+本清單四台（AU-JF28DC1＝2.8kW、AU-JF22DC1×3＝2.2kW）皆屬 3.6kW 以下，各退 $1,600。發票與安裝完成後至財政部網站申請。</footer>
 </div>
 
 <script>
 const ITEMS = [
   {p:"P1",cat:"電器",name:"主臥冷氣 聲寶 AU-JF28DC1/AM-JF28DC1",spec:"4-6坪 一級變頻冷暖分離式・主臥5.6坪適用・含標準安裝・保固7年",
-   url:"https://www.momoshop.com.tw/product/15168605",price:17900,qty:1,st:"預設購買",note:"限時價 $17,900（市售 $23,900）"},
+   url:"https://www.momoshop.com.tw/product/15168605",price:17900,qty:1,st:"預設購買",rebate:1600,note:"限時價 $17,900（市售 $23,900）・可退稅 $1,600"},
   {p:"P1",cat:"電器",name:"書房冷氣 聲寶 AU-JF22DC1/AM-JF22DC1",spec:"3坪 一級變頻冷暖分離式・書房3.3坪・含標準安裝・保固7年",
-   url:"https://www.momoshop.com.tw/product/15055635",price:15900,qty:1,st:"預設購買",note:"限時價 $15,900（市售 $20,900）・滿1件折3000、每人限購1組"},
+   url:"https://www.momoshop.com.tw/product/15055635",price:15900,qty:1,st:"預設購買",rebate:1600,note:"限時價 $15,900（市售 $20,900）・滿1件折3000、每人限購1組・可退稅 $1,600"},
   {p:"P1",cat:"電器",name:"多功能間冷氣 聲寶 AU-JF22DC1/AM-JF22DC1",spec:"3坪 一級變頻冷暖分離式・多功能間4.4坪（略大於適用坪數）",
-   url:"https://www.momoshop.com.tw/product/15055635",price:15900,qty:1,st:"預設購買",note:"同書房型號"},
+   url:"https://www.momoshop.com.tw/product/15055635",price:15900,qty:1,st:"預設購買",rebate:1600,note:"同書房型號・可退稅 $1,600"},
   {p:"P1",cat:"電器",name:"客房冷氣 聲寶 AU-JF22DC1/AM-JF22DC1",spec:"3坪 一級變頻冷暖分離式・客房3.8坪",
-   url:"https://www.momoshop.com.tw/product/15055635",price:15900,qty:1,st:"預設購買",note:"同書房型號"},
+   url:"https://www.momoshop.com.tw/product/15055635",price:15900,qty:1,st:"預設購買",rebate:1600,note:"同書房型號・可退稅 $1,600"},
   {p:"P1",cat:"修繕工程",name:"客廳窗簾軌更換",spec:"窗寬260×高220cm・舊軌道不好用",qty:1,st:"未處理"},
   {p:"P1",cat:"修繕工程",name:"主臥窗簾軌更換",spec:"窗寬120×高135cm・拉不開",qty:1,st:"未處理"},
   {p:"P1",cat:"修繕工程",name:"沒鋪地板客房窗簾軌更換",spec:"窗寬120×高135cm",qty:1,st:"未處理"},
@@ -129,10 +131,13 @@ render("全部");
 
 const nP1=ITEMS.filter(i=>i.p==="P1").length;
 const chosenSum=ITEMS.filter(i=>i.price).reduce((s,i)=>s+i.price*(i.qty||1),0);
+const rebateSum=ITEMS.filter(i=>i.rebate).reduce((s,i)=>s+i.rebate*(i.qty||1),0);
 document.getElementById("stats").innerHTML=
   `<div class="stat"><b>${ITEMS.length}</b><span>項目</span></div>
    <div class="stat"><b>${nP1}</b><span>項 P1 必要</span></div>
    <div class="stat"><b>$${chosenSum.toLocaleString()}</b><span>已選定商品小計</span></div>
+   <div class="stat"><b>−$${rebateSum.toLocaleString()}</b><span>貨物稅退稅（4台×$1,600）</span></div>
+   <div class="stat"><b>$${(chosenSum-rebateSum).toLocaleString()}</b><span>退稅後實付</span></div>
    <div class="stat"><b>${ITEMS.filter(i=>i.st==="已購買").length}</b><span>已購買</span></div>`;
 </script>
 </body>
