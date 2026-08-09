@@ -122,7 +122,7 @@
 
 <div class="plan">
   <h2>格局示意圖</h2>
-  <p>依 2026-08-09 手繪格局圖的實際方位（<a href="格局圖.png" target="_blank">看手繪原圖</a>）＋實測尺寸<strong>等比例</strong>繪製，座標單位即公分。<strong>實線＝已實測</strong>；<strong>虛線＝未量測（推估大小）</strong>；<strong>橘色線段＝出入口</strong>（宿舍入口由樓梯間進入餐廳前段上緣左側；書房、主臥的門開向餐廳前段；客房、多功能間、廚房、客人浴室的門開向餐廳後段；後陽台由廚房尾端進出）；<strong>米色圓角區塊＝預計擺放的家具</strong>（主臥床 235×190，自舊宿舍移入）。背景格線一格 = 1 公尺。點擊區塊可跳到該區域詳細內容。坪數換算：1 坪 ≈ 3.306 m²。</p>
+  <p>依 2026-08-09 手繪格局圖的實際方位（<a href="格局圖.png" target="_blank">看手繪原圖</a>）＋實測尺寸<strong>等比例</strong>繪製，座標單位即公分。<strong>實線＝已實測</strong>；<strong>虛線＝未量測（推估大小）</strong>；<strong>橘色線段＝出入口</strong>（宿舍入口由樓梯間進入餐廳前段上緣左側；書房、主臥的門開向餐廳前段；客房、多功能間、廚房、客人浴室的門開向餐廳後段；後陽台由廚房尾端進出）；<strong>米色圓角區塊＝預計擺放的家具</strong>（主臥床 235×190 自舊宿舍移入；客房 5 尺床墊 152×188 預計購入）。背景格線一格 = 1 公尺。點擊區塊可跳到該區域詳細內容。坪數換算：1 坪 ≈ 3.306 m²。</p>
   <svg viewBox="-15 -15 1485 1085" role="img" aria-label="等比例格局圖">
     <defs><pattern id="mgrid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="#e8e2d6" stroke-width="1.5"/></pattern></defs>
     <rect x="-15" y="-15" width="1485" height="1085" fill="url(#mgrid)" opacity="0.55"/>
@@ -139,6 +139,7 @@
     <g data-goto="multi"><rect class="room" x="915" y="680" width="445" height="325"/><text x="1137" y="830" text-anchor="middle">多功能間（木地板）</text><text class="dim" x="1137" y="860" text-anchor="middle">445×325cm・4.4坪</text></g>
     <g data-goto="back-balcony"><rect class="room est" x="1310" y="0" width="130" height="505"/><text x="1375" y="230" text-anchor="middle">後陽台</text><text class="dim" x="1375" y="260" text-anchor="middle">有水有電</text></g>
     <g><rect x="150" y="680" width="235" height="190" fill="#ead9bd" stroke="#b99b6b" stroke-width="1.5" rx="8"/><text class="dim" x="267" y="782" text-anchor="middle">床 235×190</text></g>
+    <g><rect x="930" y="200" width="152" height="188" fill="#ead9bd" stroke="#b99b6b" stroke-width="1.5" rx="8"/><text class="dim" x="1006" y="300" text-anchor="middle">床墊 152×188</text></g>
     <g stroke="#a06a3c" stroke-width="7" stroke-linecap="round"><line x1="605" y1="320" x2="670" y2="320"/><line x1="585" y1="555" x2="585" y2="620"/><line x1="605" y1="670" x2="670" y2="670"/><line x1="970" y1="505" x2="1035" y2="505"/><line x1="915" y1="645" x2="915" y2="678"/><line x1="935" y1="680" x2="1000" y2="680"/><line x1="1090" y1="560" x2="1090" y2="625"/><line x1="1360" y1="505" x2="1425" y2="505"/></g>
     <g><line x1="0" y1="1045" x2="200" y2="1045" stroke="#2b2620" stroke-width="3"/><line x1="0" y1="1037" x2="0" y2="1053" stroke="#2b2620" stroke-width="3"/><line x1="100" y1="1039" x2="100" y2="1051" stroke="#2b2620" stroke-width="2"/><line x1="200" y1="1037" x2="200" y2="1053" stroke="#2b2620" stroke-width="3"/><text class="dim" x="215" y="1052">200 cm（2 公尺）</text></g>
   </svg>
@@ -196,7 +197,7 @@ const AREAS = [
     todos:[["P2","評估窗型冷氣（有窗型冷氣口）"]],
     photos:[["多功能間照.jpg","多功能間（木地板）"]] },
   { id:"guest", name:"客房（磁磚地板）", dims:"寬 320 × 深 395 cm（12.6 m² ≈ 3.8 坪）",
-    specs:["窗戶：寬 120 × 高 135 cm","房內有衣櫃：深 60 × 寬 150 cm","伸縮桿方案需長度 ≥140 cm"],
+    specs:["窗戶：寬 120 × 高 135 cm","房內有衣櫃：深 60 × 寬 150 cm","伸縮桿方案需長度 ≥140 cm","預計購入 5 尺雙人床墊（152×188cm，格局圖已按比例標示）"],
     todos:[["P1","窗簾軌處理：更換／窗簾盒／伸縮桿（16:50 與 17:04 紀錄待對照確認）"],["P2","評估窗型冷氣（有窗型冷氣口）"]],
     photos:[["客房整體照.jpg","客房全景（含衣櫃）"]] },
   { id:"bath", name:"共用衛浴", dims:"",
