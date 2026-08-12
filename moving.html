@@ -102,9 +102,17 @@
 
 <h2 class="sec">✅ 待辦</h2>
 <div class="todos"><ul>
-  <li><span class="badge P1">P1</span><span>舊宿舍各房間物品、大型家具拍照，傳給小志搬家清運估價（照片是估價前提，越早傳越早有報價）</span></li>
+  <li><span class="badge P1">P1</span><span>「要搬」項目逐一拍照，傳給小志搬家清運估價（照片是估價前提，越早傳越早有報價；拍攝清單見下方搬家清單）</span></li>
+  <li><span class="badge P1">P1</span><span>量餐廳電器櫃寬度——新宿舍電器櫃空間寬約 185cm，放得下才搬</span></li>
+  <li><span class="badge tbd">處理</span><span>貓房兩個貓咪別墅不搬：上架二手出售或找人接手</span></li>
   <li><span class="badge tbd">待補</span><span>收到報價後記入下方估價表</span></li>
 </ul></div>
+
+<h2 class="sec">📦 搬家清單（依房間）</h2>
+<div class="card"><table>
+  <thead><tr><th>房間</th><th>物品</th><th>搬？</th><th>備註</th></tr></thead>
+  <tbody id="inv"></tbody>
+</table></div>
 
 <h2 class="sec">🚚 搬家公司</h2>
 <div class="vendors">
@@ -143,8 +151,44 @@
 const LOG = [
   {date:"2026-08-12", time:"—", who:"我", msg:"聯絡小志搬家清運，確認 8/22（六）8:30 有空可以搬。"},
   {date:"2026-08-12", time:"—", who:"待辦", msg:"要拍照傳給搬家公司看，才有辦法估價。"},
+  {date:"2026-08-12", time:"—", who:"我", msg:"確認搬家清單（見上方）：貓咪別墅×2 不搬（賣/送）、客房床墊不搬、餐廳電器櫃量了合適才搬，其餘大型家具家電都搬。"},
   {date:"2026-08-22", time:"08:30", who:"行程", msg:"小志搬家清運到舊宿舍搬家（搬完後劉小姐才拆客廳冷氣）。", type:"plan"},
 ];
+
+// 搬家清單：go = "yes" | "no" | "check"
+const MOVE = [
+  {room:"貓房", item:"貓咪別墅 ×2", go:"no", note:"轉手賣掉或送人"},
+  {room:"客房", item:"化妝桌", go:"yes"},
+  {room:"客房", item:"雙人床頭櫃", go:"yes"},
+  {room:"客房", item:"床板", go:"yes"},
+  {room:"客房", item:"床墊", go:"no"},
+  {room:"主臥", item:"雙人加大床架", go:"yes", note:"新宿舍主臥已規劃放置（235×190，放得下）"},
+  {room:"主臥", item:"床墊", go:"yes"},
+  {room:"主臥", item:"立鏡", go:"yes"},
+  {room:"主臥", item:"外套架", go:"yes"},
+  {room:"書房", item:"捷安特腳踏車", go:"yes"},
+  {room:"書房", item:"書櫃", go:"yes", note:"新宿舍書房已規劃放置（高185×寬80×深45）"},
+  {room:"書房", item:"層架", go:"yes"},
+  {room:"餐廳", item:"電器櫃", go:"check", note:"量寬度：新宿舍空間寬約 185cm，放得下就搬"},
+  {room:"餐廳", item:"冰箱", go:"yes"},
+  {room:"客廳", item:"沙發", go:"yes"},
+  {room:"客廳", item:"餐桌", go:"yes", note:"新宿舍餐廳凹洞（寬135×深50）放這張剛剛好"},
+  {room:"客廳", item:"電視櫃", go:"yes"},
+  {room:"客廳", item:"電視", go:"yes"},
+  {room:"客廳", item:"鞋櫃", go:"yes"},
+  {room:"廚房", item:"洗碗機", go:"yes"},
+  {room:"廚房", item:"RO 過濾器", go:"yes", note:"新宿舍廚房水龍頭有外接 RO 進水口"},
+  {room:"廚房", item:"訂製桌 ×2", go:"yes"},
+  {room:"陽台", item:"洗衣機", go:"yes"},
+];
+const GO = {yes:['<span class="badge mv">✅ 搬</span>'], no:['<span class="badge P1">❌ 不搬</span>'], check:['<span class="badge tbd">❓ 待量</span>']};
+const inv = document.getElementById("inv");
+let lastRoom = "";
+MOVE.forEach(m=>{
+  const room = m.room===lastRoom ? "" : m.room; lastRoom = m.room;
+  inv.insertAdjacentHTML("beforeend",
+    `<tr><td>${room}</td><td>${m.item}</td><td>${GO[m.go]}</td><td>${m.note||""}</td></tr>`);
+});
 
 const tl = document.getElementById("timeline");
 let lastDate = "";
