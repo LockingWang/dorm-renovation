@@ -33,6 +33,7 @@
     border-radius:999px;border:1px solid var(--line);background:var(--card)}
   nav.toc a:hover{background:var(--accent-soft);border-color:var(--accent)}
   nav.toc a.shop{background:var(--accent);color:#fff;border-color:var(--accent)}
+  nav.toc a.ac{background:#1d6a96;color:#fff;border-color:#1d6a96}
 
   .plan{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
     box-shadow:var(--shadow);margin:26px 0;padding:18px}
@@ -239,6 +240,7 @@ const areasEl = document.getElementById("areas");
 const tocEl = document.getElementById("toc");
 let flat = [];  // lightbox 用的照片平面清單
 tocEl.insertAdjacentHTML("beforeend", `<a class="shop" href="shopping.html">🛒 購買清單</a>`);
+tocEl.insertAdjacentHTML("beforeend", `<a class="ac" href="aircon.html">❄️ 冷氣溝通</a>`);
 AREAS.forEach(a=>{
   tocEl.insertAdjacentHTML("beforeend", `<a href="#${a.id}">${a.name.replace(/（.*?）/,"")}</a>`);
   const specs = a.specs.map(s=>`<li>${s}</li>`).join("");

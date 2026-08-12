@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>冷氣評估與溝通紀錄 — 新宿舍改裝評估</title>
+<style>
+  :root{
+    --bg:#f7f4ee; --card:#ffffff; --ink:#2b2620; --muted:#7a7167;
+    --line:#e6dfd4; --accent:#a06a3c; --accent-soft:#f0e6d8;
+    --p1:#b03a2e; --p1-bg:#fbeae7; --p2:#9a6b00; --p2-bg:#faf1dc;
+    --p3:#3e7a4e; --p3-bg:#e8f2ea; --chk:#5c6672; --chk-bg:#eceff2;
+    --ac:#1d6a96; --ac-bg:#e3eff7;
+    --radius:14px; --shadow:0 1px 3px rgba(43,38,32,.08),0 6px 18px rgba(43,38,32,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif;line-height:1.65}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px 80px}
+  header.hero{padding:42px 0 6px}
+  .hero h1{font-size:1.8rem;margin:0 0 6px}
+  .hero p.sub{margin:0;color:var(--muted)}
+  .hero .links{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .hero a.back{display:inline-block;color:var(--accent);text-decoration:none;
+    border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 14px;font-size:.88rem}
+  .hero a.back:hover{background:var(--accent-soft)}
+
+  h2.sec{font-size:1.05rem;margin:34px 0 12px;display:flex;align-items:center;gap:8px}
+
+  /* 決策重點 */
+  .keys{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  .key{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:14px 16px}
+  .key b{display:block;color:var(--ac);margin-bottom:4px}
+  .key span{font-size:.9rem;color:var(--muted)}
+
+  /* 師傅名片卡 */
+  .vendors{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .vendor{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:18px 20px}
+  .vendor h3{margin:0 0 2px;font-size:1.1rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .vendor .src{font-size:.78rem;color:var(--muted);font-weight:400}
+  .vendor dl{margin:10px 0 0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.92rem}
+  .vendor dt{color:var(--muted);white-space:nowrap}
+  .vendor dd{margin:0}
+  .vendor a{color:var(--ac);text-decoration:none;font-weight:600}
+  .vendor a:hover{text-decoration:underline}
+  .vendor .cardimg{margin-top:12px;border:1px solid var(--line);border-radius:10px;overflow:hidden;
+    cursor:zoom-in;max-width:340px}
+  .vendor .cardimg img{width:100%;display:block}
+  .badge{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap}
+  .badge.brand{color:var(--ac);background:var(--ac-bg)}
+  .badge.court{color:var(--p3);background:var(--p3-bg)}
+  .badge.tbd{color:var(--chk);background:var(--chk-bg)}
+  .badge.appt{color:var(--p2);background:var(--p2-bg)}
+
+  /* 溝通時間軸 */
+  .timeline{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:20px 24px}
+  .tl-date{font-size:.8rem;letter-spacing:.12em;color:var(--muted);font-weight:600;margin:14px 0 6px}
+  .tl-date:first-child{margin-top:0}
+  .tl-item{display:grid;grid-template-columns:52px auto 1fr;gap:10px;padding:7px 0;
+    border-left:3px solid var(--ac-bg);padding-left:14px;margin-left:4px}
+  .tl-item .t{color:var(--muted);font-size:.85rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tl-item .who{color:var(--ac);font-weight:700;font-size:.88rem;white-space:nowrap}
+  .tl-item .msg{font-size:.95rem}
+  .tl-item.plan{border-left-color:#f3e3bd}
+  .tl-item.plan .who{color:var(--p2)}
+
+  /* 比價表 */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:6px 0;overflow-x:auto}
+  table{width:100%;border-collapse:collapse;min-width:720px}
+  th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;font-size:.92rem}
+  th{font-size:.75rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  tr.chosen{background:#fdf9f2}
+  td small{color:var(--muted);display:block}
+  td.price{white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+  a.link{color:var(--ac)}
+
+  /* 房間需求 */
+  .rooms{display:flex;gap:10px;flex-wrap:wrap}
+  .room-chip{background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:6px 16px;font-size:.9rem;box-shadow:var(--shadow)}
+  .room-chip b{color:var(--ac)}
+
+  /* Lightbox（名片放大用） */
+  #lb{position:fixed;inset:0;background:rgba(20,16,12,.93);z-index:100;display:none;
+    align-items:center;justify-content:center;padding:20px;flex-direction:column}
+  #lb.open{display:flex}
+  #lb img{max-width:92vw;max-height:84vh;border-radius:8px}
+  #lb .close{position:fixed;top:16px;right:20px;font:inherit;font-size:1.1rem;color:#fff;
+    background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;
+    padding:6px 16px;cursor:pointer}
+
+  footer{margin-top:40px;color:var(--muted);font-size:.82rem;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>❄️ 冷氣評估與溝通紀錄</h1>
+  <p class="sub">師傅聯絡資訊、溝通時間軸與方案比價 ・ 4 間臥室皆需裝冷氣</p>
+  <div class="links">
+    <a class="back" href="index.html">← 回格局與需求總覽</a>
+    <a class="back" href="shopping.html">🛒 購買清單</a>
+  </div>
+</header>
+
+<h2 class="sec">📌 目前結論</h2>
+<div class="keys">
+  <div class="key"><b>全部裝分離式</b><span>法院配合師傅建議：窗型冷氣容易有鳥類築巢，之前很多法官都把窗型拆掉還給法院。</span></div>
+  <div class="key"><b>不用請吊車</b><span>室外機可安裝在外牆，不必佔用陽台空間，省下吊車費用。</span></div>
+  <div class="key"><b>先比價再下單</b><span>momo 聲寶方案暫列「預設購買」，等兩位師傅現場評估報價後再決定，先不要下單。</span></div>
+</div>
+
+<h2 class="sec">🏠 需要冷氣的房間</h2>
+<div class="rooms">
+  <span class="room-chip">主臥 <b>5.6 坪</b></span>
+  <span class="room-chip">多功能間 <b>4.4 坪</b></span>
+  <span class="room-chip">客房 <b>3.8 坪</b></span>
+  <span class="room-chip">書房 <b>3.3 坪</b></span>
+</div>
+
+<h2 class="sec">👷 師傅聯絡資訊</h2>
+<div class="vendors">
+  <div class="vendor">
+    <h3>楊子諒（冷氣工程行）
+      <span class="badge court">法院配合</span><span class="badge brand">主營：大金 Daikin</span></h3>
+    <div class="src">高雄地方法院配合的冷氣師傅（同事推薦）</div>
+    <dl>
+      <dt>電話</dt><dd><a href="tel:0982513148">0982-513148</a></dd>
+      <dt>地址</dt><dd>高雄市苓雅區福德一路 134 巷 34 號</dd>
+      <dt>服務</dt><dd>各廠牌窗型/分離式冷氣買賣、安裝、售後服務</dd>
+      <dt>約定</dt><dd><span class="badge appt">已約</span> 8/15（週六）中午過後到宿舍現場評估</dd>
+    </dl>
+    <div class="cardimg" onclick="lbOpen('photos/名片/冷氣師傅-楊子諒-名片.jpg')">
+      <img src="photos/名片/冷氣師傅-楊子諒-名片.jpg" alt="楊子諒名片" loading="lazy"></div>
+  </div>
+  <div class="vendor">
+    <h3>第二位師傅 <span class="badge tbd">資料待補</span></h3>
+    <div class="src">來源待補</div>
+    <dl>
+      <dt>電話</dt><dd>待補</dd>
+      <dt>品牌</dt><dd>待補</dd>
+      <dt>約定</dt><dd><span class="badge appt">已約</span> 8/12（週二）19:00 到宿舍現場評估</dd>
+    </dl>
+  </div>
+</div>
+
+<h2 class="sec">💬 溝通時間軸</h2>
+<div class="timeline" id="timeline"></div>
+
+<h2 class="sec">💰 方案比價</h2>
+<div class="card"><table>
+  <thead><tr><th>方案</th><th>品牌</th><th>內容</th><th>金額</th><th>狀態</th></tr></thead>
+  <tbody>
+    <tr class="chosen"><td>momo 網購</td><td>聲寶</td>
+      <td>4 台一級變頻冷暖分離式，含標準安裝<small>主臥 AU-JF28DC1（$17,900）＋書房/多功能間/客房 AU-JF22DC1×3（$15,900/台）・詳<a class="link" href="shopping.html">購買清單</a></small></td>
+      <td class="price">$65,600<small>可退稅 $1,600/台</small></td><td>預設購買（暫緩下單）</td></tr>
+    <tr><td>楊子諒師傅</td><td>大金</td>
+      <td>待 8/15（六）現場評估報價<small>順便詢問：前陽台乾衣機接電工程可否一起處理</small></td>
+      <td class="price">待報價</td><td>評估中</td></tr>
+    <tr><td>第二位師傅</td><td>待確認</td>
+      <td>待 8/12（二）19:00 現場評估報價</td>
+      <td class="price">待報價</td><td>評估中</td></tr>
+  </tbody>
+</table></div>
+
+<footer>資料同步自 <code>07-廠商聯絡.md</code>。新的溝通紀錄請加進本頁 <code>LOG</code> 陣列（依日期分組自動顯示）。</footer>
+</div>
+
+<div id="lb" onclick="lbClose()">
+  <button class="close">✕ 關閉</button>
+  <img id="lb-img" src="" alt="放大檢視">
+</div>
+
+<script>
+// 溝通紀錄：依日期分組顯示。type:"plan" = 約定/行程，其他為對話訊息。
+const LOG = [
+  {date:"2026-08-12", time:"10:35", who:"王琮仁", msg:"（楊師傅）約禮拜六（8/15）中午過後過去看。", type:"plan"},
+  {date:"2026-08-12", time:"10:36", who:"王琮仁", msg:"師傅建議都裝分離式的，因為窗型的容易有鳥類築巢，後來很多法官都把窗型拆掉還給法院。"},
+  {date:"2026-08-12", time:"10:37", who:"王琮仁", msg:"不用請吊車，可以把室外機安裝在外牆，可以不用放在陽台。"},
+  {date:"2026-08-12", time:"19:00", who:"行程", msg:"第二位師傅到宿舍現場評估。", type:"plan"},
+  {date:"2026-08-15", time:"12:00", who:"行程", msg:"楊子諒師傅（大金）中午過後到宿舍現場評估。", type:"plan"},
+];
+
+const tl = document.getElementById("timeline");
+let lastDate = "";
+const wd = ["日","一","二","三","四","五","六"];
+LOG.forEach(e=>{
+  if(e.date !== lastDate){
+    const d = new Date(e.date+"T00:00:00");
+    tl.insertAdjacentHTML("beforeend",
+      `<div class="tl-date">${e.date.replaceAll("-","/")}（${wd[d.getDay()]}）</div>`);
+    lastDate = e.date;
+  }
+  tl.insertAdjacentHTML("beforeend",
+    `<div class="tl-item ${e.type||""}"><span class="t">${e.time}</span><span class="who">${e.who}</span><span class="msg">${e.msg}</span></div>`);
+});
+
+function lbOpen(src){ document.getElementById("lb-img").src = src;
+  document.getElementById("lb").classList.add("open"); document.body.style.overflow="hidden"; }
+function lbClose(){ document.getElementById("lb").classList.remove("open"); document.body.style.overflow=""; }
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") lbClose(); });
+</script>
+</body>
+</html>
