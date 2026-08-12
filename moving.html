@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>搬家紀錄 — 新宿舍改裝評估</title>
+<style>
+  :root{
+    --bg:#f7f4ee; --card:#ffffff; --ink:#2b2620; --muted:#7a7167;
+    --line:#e6dfd4; --accent:#a06a3c; --accent-soft:#f0e6d8;
+    --p1:#b03a2e; --p1-bg:#fbeae7; --p2:#9a6b00; --p2-bg:#faf1dc;
+    --p3:#3e7a4e; --p3-bg:#e8f2ea; --chk:#5c6672; --chk-bg:#eceff2;
+    --mv:#3e7a4e; --mv-bg:#e8f2ea;
+    --radius:14px; --shadow:0 1px 3px rgba(43,38,32,.08),0 6px 18px rgba(43,38,32,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif;line-height:1.65}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px 80px}
+  header.hero{padding:42px 0 6px}
+  .hero h1{font-size:1.8rem;margin:0 0 6px}
+  .hero p.sub{margin:0;color:var(--muted)}
+  .hero .links{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .hero a.back{display:inline-block;color:var(--accent);text-decoration:none;
+    border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 14px;font-size:.88rem}
+  .hero a.back:hover{background:var(--accent-soft)}
+
+  h2.sec{font-size:1.05rem;margin:34px 0 12px;display:flex;align-items:center;gap:8px}
+
+  .keys{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  .key{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:14px 16px}
+  .key b{display:block;color:var(--mv);margin-bottom:4px}
+  .key span{font-size:.9rem;color:var(--muted)}
+
+  .vendors{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .vendor{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:18px 20px}
+  .vendor h3{margin:0 0 2px;font-size:1.1rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .vendor .src{font-size:.78rem;color:var(--muted);font-weight:400}
+  .vendor dl{margin:10px 0 0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.92rem}
+  .vendor dt{color:var(--muted);white-space:nowrap}
+  .vendor dd{margin:0}
+  .vendor a{color:var(--mv);text-decoration:none;font-weight:600}
+  .vendor a:hover{text-decoration:underline}
+  .badge{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap}
+  .badge.mv{color:var(--mv);background:var(--mv-bg)}
+  .badge.tbd{color:var(--chk);background:var(--chk-bg)}
+  .badge.appt{color:var(--p2);background:var(--p2-bg)}
+  .badge.P1{color:var(--p1);background:var(--p1-bg)}
+
+  .todos{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:16px 20px}
+  .todos ul{list-style:none;margin:0;padding:0}
+  .todos li{display:flex;gap:10px;align-items:flex-start;margin:8px 0}
+  .todos .badge{margin-top:3px;flex:none}
+
+  .timeline{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:20px 24px}
+  .tl-date{font-size:.8rem;letter-spacing:.12em;color:var(--muted);font-weight:600;margin:14px 0 6px}
+  .tl-date:first-child{margin-top:0}
+  .tl-item{display:grid;grid-template-columns:52px auto 1fr;gap:10px;padding:7px 0;
+    border-left:3px solid var(--mv-bg);padding-left:14px;margin-left:4px}
+  .tl-item .t{color:var(--muted);font-size:.85rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tl-item .who{color:var(--mv);font-weight:700;font-size:.88rem;white-space:nowrap}
+  .tl-item .msg{font-size:.95rem}
+  .tl-item.plan{border-left-color:#f3e3bd}
+  .tl-item.plan .who{color:var(--p2)}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:6px 0;overflow-x:auto}
+  table{width:100%;border-collapse:collapse;min-width:640px}
+  th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;font-size:.92rem}
+  th{font-size:.75rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  td small{color:var(--muted);display:block}
+  td.price{white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+  a.link{color:var(--mv)}
+
+  footer{margin-top:40px;color:var(--muted);font-size:.82rem;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>🚚 搬家紀錄</h1>
+  <p class="sub">法院舊宿舍 → 新宿舍 ・ 搬家公司聯絡、估價與行程追蹤</p>
+  <div class="links">
+    <a class="back" href="index.html">← 回格局與需求總覽</a>
+    <a class="back" href="shopping.html">🛒 購買清單</a>
+    <a class="back" href="aircon.html">❄️ 冷氣溝通紀錄</a>
+  </div>
+</header>
+
+<h2 class="sec">📌 目前狀態</h2>
+<div class="keys">
+  <div class="key"><b>搬家日已敲定</b><span>8/22（六）8:30 小志搬家清運確定有空可以搬。</span></div>
+  <div class="key"><b>估價需要照片</b><span>要先拍照傳給搬家公司看（家具/物品數量），才有辦法估價。</span></div>
+  <div class="key"><b>與冷氣拆機銜接</b><span>搬走後（8/22 之後）劉小姐才到舊宿舍拆客廳冷氣，詳<a class="link" href="aircon.html">冷氣溝通紀錄</a>。</span></div>
+</div>
+
+<h2 class="sec">✅ 待辦</h2>
+<div class="todos"><ul>
+  <li><span class="badge P1">P1</span><span>舊宿舍各房間物品、大型家具拍照，傳給小志搬家清運估價（照片是估價前提，越早傳越早有報價）</span></li>
+  <li><span class="badge tbd">待補</span><span>收到報價後記入下方估價表</span></li>
+</ul></div>
+
+<h2 class="sec">🚚 搬家公司</h2>
+<div class="vendors">
+  <div class="vendor">
+    <h3>小志搬家清運 <span class="badge mv">已確認 8/22 有空</span></h3>
+    <div class="src">搬家遷移・廢棄物清運・拆除工程・吊掛作業</div>
+    <dl>
+      <dt>電話</dt><dd><a href="tel:0906800518">0906-800518</a></dd>
+      <dt>地址</dt><dd>屏東縣屏東市北勢里公正一街 83 巷 7 號（另有高雄美濃據點）</dd>
+      <dt>網站</dt><dd><a href="https://www.zhi.tw/" target="_blank" rel="noopener">zhi.tw ↗</a></dd>
+      <dt>地圖</dt><dd><a href="https://maps.app.goo.gl/ujqEpWy69Yc92ajWA" target="_blank" rel="noopener">Google Maps ↗</a></dd>
+      <dt>約定</dt><dd><span class="badge appt">已約</span> 8/22（六）8:30 到舊宿舍搬家</dd>
+      <dt>估價</dt><dd><span class="badge tbd">待拍照傳圖後報價</span></dd>
+    </dl>
+  </div>
+</div>
+
+<h2 class="sec">💬 溝通時間軸</h2>
+<div class="timeline" id="timeline"></div>
+
+<h2 class="sec">💰 估價追蹤</h2>
+<div class="card"><table>
+  <thead><tr><th>廠商</th><th>內容</th><th>金額</th><th>狀態</th></tr></thead>
+  <tbody>
+    <tr><td>小志搬家清運</td>
+      <td>舊宿舍 → 新宿舍搬家（8/22 六 8:30）<small>需先拍照傳給對方才能估價</small></td>
+      <td class="price">待報價</td><td>待拍照估價</td></tr>
+  </tbody>
+</table></div>
+
+<footer>資料同步自 <code>07-廠商聯絡.md</code>。新的溝通紀錄請加進本頁 <code>LOG</code> 陣列（依日期分組自動顯示）。</footer>
+</div>
+
+<script>
+// 溝通紀錄：依日期分組顯示。type:"plan" = 約定/行程，其他為對話訊息。
+const LOG = [
+  {date:"2026-08-12", time:"—", who:"我", msg:"聯絡小志搬家清運，確認 8/22（六）8:30 有空可以搬。"},
+  {date:"2026-08-12", time:"—", who:"待辦", msg:"要拍照傳給搬家公司看，才有辦法估價。"},
+  {date:"2026-08-22", time:"08:30", who:"行程", msg:"小志搬家清運到舊宿舍搬家（搬完後劉小姐才拆客廳冷氣）。", type:"plan"},
+];
+
+const tl = document.getElementById("timeline");
+let lastDate = "";
+const wd = ["日","一","二","三","四","五","六"];
+LOG.forEach(e=>{
+  if(e.date !== lastDate){
+    const d = new Date(e.date+"T00:00:00");
+    tl.insertAdjacentHTML("beforeend",
+      `<div class="tl-date">${e.date.replaceAll("-","/")}（${wd[d.getDay()]}）</div>`);
+    lastDate = e.date;
+  }
+  tl.insertAdjacentHTML("beforeend",
+    `<div class="tl-item ${e.type||""}"><span class="t">${e.time}</span><span class="who">${e.who}</span><span class="msg">${e.msg}</span></div>`);
+});
+</script>
+</body>
+</html>
