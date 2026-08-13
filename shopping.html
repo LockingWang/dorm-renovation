@@ -51,8 +51,8 @@
   .badge.P3{color:var(--p3);background:var(--p3-bg)}
   .badge.st-預設購買{color:var(--buy);background:var(--buy-bg)}
   .badge.st-已購買{color:var(--p3);background:var(--p3-bg)}
-  .badge.st-待確認,.badge.st-待評估,.badge.st-待決定{color:var(--chk);background:var(--chk-bg)}
-  .badge.st-未處理,.badge.st-未購買{color:var(--muted);background:#f1ede6}
+  .badge.st-待確認,.badge.st-待評估,.badge.st-待決定,.badge.st-待報價{color:var(--chk);background:var(--chk-bg)}
+  .badge.st-未處理,.badge.st-未購買,.badge.st-暫緩{color:var(--muted);background:#f1ede6}
   a.link{color:var(--accent)}
   footer{margin-top:40px;color:var(--muted);font-size:.82rem;text-align:center}
 </style>
@@ -121,6 +121,15 @@ const ITEMS = [
   {p:"P1",cat:"電器",name:"前陽台乾衣機 Panasonic NH-80RZ-W（8公斤）",spec:"全自動智慧烘乾・三段式溫控・含標準安裝・機身約寬63×深50cm（待確認）",
    url:"https://www.momoshop.com.tw/product/13743404",price:9351,qty:1,st:"預設購買",note:"限時價 $9,351（市售 $10,990）・前陽台無電源，需從冷氣窗接電"},
   {p:"P3",cat:"家具",name:"餐廳電器櫃",spec:"空間寬約185cm",qty:1,st:"待評估"},
+  {p:"P2",cat:"多功能間",name:"玻璃行訂製整塊舞蹈鏡（貼牆）",spec:"一整塊明鏡・建議約寬240×高180cm（≈47才）・5mm＋背面防爆膜・貼避開窗的長邊牆",qty:1,st:"待報價",note:"明鏡行情約$150–200/才，另計出車安裝・需向玻璃行確認單片最大尺寸與樓梯搬運・詳 09-多功能間規劃.md"},
+  {p:"P2",cat:"多功能間",name:"可調式啞鈴（一對）",spec:"2–24kg 或 10–40kg 可調・免啞鈴架省空間・下方需鋪緩衝墊",qty:1,st:"待決定",note:"預估 $3,000–8,000・若已有啞鈴可略過"},
+  {p:"P2",cat:"多功能間",name:"可調式健身椅",spec:"可平躺/上斜・收折款不用時可立起",qty:1,st:"待決定",note:"預估 $2,000–4,000・若已有可略過"},
+  {p:"P2",cat:"多功能間",name:"重訓緩衝地墊",spec:"EVA 拼接墊厚≥2cm・鋪啞鈴＋健身椅區約1.5–2坪・保護木地板",qty:1,st:"未購買",note:"預估 $1,000–2,000"},
+  {p:"P3",cat:"多功能間",name:"瑜珈墊",spec:"TPE 厚6–8mm",qty:1,st:"待決定",note:"預估 $500–1,500・若已有可略過"},
+  {p:"P3",cat:"多功能間",name:"電子鋼琴（88鍵）＋琴架琴椅",spec:"候選：Yamaha P-145（約$14,000–16,000）／Roland FP-10（主機$17,400、整套$20,200）",qty:1,st:"暫緩",note:"2026-08-13 決定先不買"},
+  {p:"P3",cat:"多功能間",name:"吉他立架或壁掛架",spec:"立架約$300–500・壁掛要鑽牆",qty:1,st:"未購買"},
+  {p:"P3",cat:"多功能間",name:"延長線（過載保護）",spec:"樂器角供電鋼琴・先確認插座位置再買",qty:1,st:"待確認",note:"多功能間插座位置待現場確認"},
+  {p:"P3",cat:"多功能間",name:"收納層架",spec:"放瑜珈墊/彈力帶等小物",qty:1,st:"待決定",note:"可考慮舊宿舍層架挪用（原定書房）"},
   {p:"整理",cat:"整理",name:"書房木桌撤掉",spec:"搬運/丟棄方式待定",qty:1,st:"未處理"},
   {p:"整理",cat:"搬運",name:"主臥床架＋床墊（舊宿舍移入）",spec:"長235×寬190cm・不需購買・安排搬運",qty:1,st:"未處理"},
   {p:"整理",cat:"搬運",name:"書房書櫃（舊家移入）",spec:"高185×寬80×深45cm・不需購買・安排搬運",qty:1,st:"未處理"},
