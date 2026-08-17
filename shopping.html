@@ -53,6 +53,8 @@
   .badge.st-已購買{color:var(--p3);background:var(--p3-bg)}
   .badge.st-待確認,.badge.st-待評估,.badge.st-待決定,.badge.st-待報價{color:var(--chk);background:var(--chk-bg)}
   .badge.st-未處理,.badge.st-未購買,.badge.st-暫緩{color:var(--muted);background:#f1ede6}
+  .badge.st-進行中{color:var(--p2);background:var(--p2-bg)}
+  .badge.st-取消{color:var(--muted);background:#f1ede6;text-decoration:line-through}
   a.link{color:var(--accent)}
   footer{margin-top:40px;color:var(--muted);font-size:.82rem;text-align:center}
 </style>
@@ -98,19 +100,20 @@ const ITEMS = [
    url:"https://www.momoshop.com.tw/product/5864625",price:2999,qty:2,st:"預設購買",note:"促銷價 $2,999/個（市售 $7,799）・兩個並排需牆面約240cm，已確認放得下"},
   {p:"P1",cat:"家具",name:"書房單人床墊 簡約家居（抗菌乳膠層/可折疊）",spec:"配書房現有單人床架・記憶海綿＋抗菌除蟎・壓縮打包出貨",
    url:"https://www.momoshop.com.tw/TP/TP0003606/goodsDetail/TP00036060000001",price:868,qty:1,st:"預設購買",note:"促銷 $868~$1,918 依尺寸選項・下單前先量床架內徑選尺寸"},
-  {p:"P1",cat:"窗簾織品",name:"IKEA VIDGA 上牆式雙軌窗簾軌道組",spec:"含2×140cm軌道＋壁掛配件・客廳2組拼280cm＋四小窗各1組・全屋汰換舊軌",
-   url:"https://www.ikea.com.tw/zh/products/window-solutions/curtain-rods-rails-and-accessories/vidga-spr-49428265",price:1493,qty:6,st:"預設購買",note:"$1,493/組・雙軌滑輪好拉"},
+  {p:"P1",cat:"窗簾織品",name:"IKEA VIDGA 上牆式雙軌窗簾軌道組",spec:"含2×140cm軌道＋壁掛配件・客廳2組拼280cm＋主臥/書房各1組",
+   url:"https://www.ikea.com.tw/zh/products/window-solutions/curtain-rods-rails-and-accessories/vidga-spr-49428265",price:1493,qty:4,st:"預設購買",note:"$1,493/組・雙軌滑輪好拉・多功能間與客房保留舊軌不裝（2026-08-17）・書房軌道現況待確認"},
   {p:"P1",cat:"窗簾織品",name:"IKEA MAJGULL 遮光窗簾 2件裝（145×250）",spec:"完全遮光・含織帶・客廳2包＋小窗共2包（一片蓋一窗）",
-   url:"https://www.ikea.com.tw/zh/products/window-solutions/curtains-and-window-panels/majgull-art-10417814",price:1299,qty:4,st:"預設購買",note:"$1,299/包・客廳雙包=2倍蓬度"},
-  {p:"P1",cat:"窗簾織品",name:"IKEA SILVERLÖNN 白紗簾 2件裝（145×250）",spec:"含織帶可直掛滑鉤・客廳2包＋小窗共2包",
-   url:"https://www.ikea.com.tw/zh/products/window-solutions/curtains-and-window-panels/silverlonn-art-40491039",price:799,qty:4,st:"預設購買",note:"$799/包"},
+   url:"https://www.ikea.com.tw/zh/products/window-solutions/curtains-and-window-panels/majgull-art-10417814",price:1299,qty:4,st:"預設購買",note:"$1,299/包・客廳雙包=2倍蓬度・多功能間/客房掛舊軌改用傳統窗簾鈎"},
+  {p:"P1",cat:"窗簾織品",name:"IKEA SILVERLÖNN 白紗簾 2件裝（145×250）",spec:"含織帶可直掛滑鉤・客廳2包＋主臥/書房小窗1包",
+   url:"https://www.ikea.com.tw/zh/products/window-solutions/curtains-and-window-panels/silverlonn-art-40491039",price:799,qty:3,st:"預設購買",note:"$799/包・多功能間/客房舊軌待確認單雙軌，單軌先只掛遮光簾"},
   {p:"P1",cat:"窗簾織品",name:"IKEA VIDGA 滑動鉤（24件裝）",spec:"掛於軌道滑槽內",
-   url:"https://www.ikea.com.tw/zh/products/window-solutions/curtain-rods-rails-and-accessories/vidga-art-00483003",price:99,qty:9,st:"預設購買",note:"$99/包・8包供全屋窗簾＋1包供L型隔間簾"},
+   url:"https://www.ikea.com.tw/zh/products/window-solutions/curtain-rods-rails-and-accessories/vidga-art-00483003",price:99,qty:7,st:"預設購買",note:"$99/包・6包供VIDGA窗簾（客廳＋主臥/書房）＋1包供L型隔間簾"},
+  {p:"P1",cat:"窗簾織品",name:"傳統窗簾鈎（四爪鉤）",spec:"配MAJGULL織帶・多功能間＋客房舊軌用・約4片簾用量",qty:1,st:"未購買",note:"預估 $100–300・先確認舊軌掛鉤形式（滑車/掛環）"},
   {p:"P2",cat:"窗簾織品",name:"IKEA VIDGA L 型隔間軌道組（客廳/餐廳）",spec:"3×140cm＋轉角件・天花板安裝・裁成112＋90cm・高度暫估3m待現場量",
    url:"https://www.ikea.com.tw/zh/products/window-solutions/curtain-rods-rails-and-accessories/vidga-spr-19428243",price:1792,qty:1,st:"預設購買",note:"$1,792/組・隔間簾布款待選（簾最長250cm，3m高會離地50cm）"},
   {p:"P2",cat:"窗簾織品",name:"L 型隔間簾 IKEA MAJGULL 遮光窗簾 2件裝（145×250）",spec:"L總長202cm・2片×145cm=290cm 足夠・掛於 L 型隔間軌道",
    url:"https://www.ikea.com.tw/zh/products/window-solutions/curtains-and-window-panels/majgull-art-10417814",price:1299,qty:1,st:"預設購買",note:"$1,299/包・遮光款隔間效果佳，若想輕透可改白紗 SILVERLÖNN $799・另需滑動鉤1包$99（已含於下方掛鉤數量外，記得加購）"},
-  {p:"P1",cat:"修繕工程",name:"全屋舊窗簾軌拆除＋VIDGA 安裝",spec:"客廳/主臥/客房舊軌拆除・鑽牆上壁掛・主臥壁癌處理後再裝・小窗建議落地簾或改短",qty:1,st:"未處理"},
+  {p:"P1",cat:"修繕工程",name:"舊窗簾軌拆除＋VIDGA 安裝",spec:"客廳/主臥舊軌已拆除（2026-08-17）・多功能間與客房軌道結構正常保留・鑽牆上壁掛・主臥壁癌處理後再裝",qty:1,st:"進行中"},
   {p:"P1",cat:"修繕工程",name:"主臥壁癌處理",spec:"窗簾周邊・對外牆・先處理再裝窗簾",qty:1,st:"未處理"},
   {p:"P1",cat:"修繕工程",name:"主臥浴室透氣門更換",spec:"原記門有破損・2026-08-17確認換透氣門・門尺寸待量",qty:1,st:"未處理",note:"預估 $3,000–6,000・詳 10-主臥浴室規劃.md"},
   {p:"P1",cat:"修繕工程",name:"主臥浴室排風扇更換",spec:"開口尺寸與排風形式（管道/直排窗）待確認",qty:1,st:"未處理",note:"預估 $1,500–3,000 含工"},
